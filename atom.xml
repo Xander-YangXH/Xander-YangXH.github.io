@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <author>
+    <name>Xander Yang</name>
+  </author>
+  <generator uri="https://hexo.io/">Hexo</generator>
+  <id>https://xander-yangxh.github.io/</id>
+  <link href="https://xander-yangxh.github.io/" rel="alternate"/>
+  <link href="https://xander-yangxh.github.io/atom.xml" rel="self"/>
+  <rights>All rights reserved 2026, Xander Yang</rights>
+  <subtitle>LLM · Agent · 软件工程</subtitle>
+  <title>Xander的博客</title>
+  <updated>2026-08-28T13:30:00.000Z</updated>
+  <entry>
+    <author>
+      <name>Xander Yang</name>
+    </author>
+    <category term="笔记" scheme="https://xander-yangxh.github.io/categories/%E7%AC%94%E8%AE%B0/"/>
+    <category term="工程" scheme="https://xander-yangxh.github.io/tags/%E5%B7%A5%E7%A8%8B/"/>
+    <category term="前端" scheme="https://xander-yangxh.github.io/tags/%E5%89%8D%E7%AB%AF/"/>
+    <content>
+      <![CDATA[<p>这个博客的主题 Ember 是自己写的，没有用现成的主题。记录一下几个设计取舍，方便以后回头改。</p><span id="more"></span><h2 id="版式"><a href="#版式" class="headerlink" title="版式"></a>版式</h2><p>首页自上而下：Hero（大标题 + 统计）→ 知识地图 → 近期文章 → 精选内容 → 热门标签。知识地图的四张卡片在 <code>themes/ember/_config.yml</code> 的 <code>topics</code> 里配置，点击进入对应标签页。</p><h2 id="配色"><a href="#配色" class="headerlink" title="配色"></a>配色</h2><p>暗色用暖灰黑底（<code>#1a1816</code>）而不是冷黑，主强调色是陶土橙，辅助色是琥珀；浅色则是奶油白底。标题用衬线体，正文和导航用无衬线体，代码用等宽体。</p><h2 id="小功能"><a href="#小功能" class="headerlink" title="小功能"></a>小功能</h2><ul><li>三态主题切换：浅色 &#x2F; 深色 &#x2F; 跟随系统，写在 <code>localStorage</code>，首屏前就应用，避免闪烁。</li><li><code>Ctrl/⌘ + K</code> 打开搜索，索引是构建时生成的 <code>search.json</code>，纯前端过滤。</li><li>文章页右侧目录随滚动高亮，代码块带语言标签和复制按钮。</li></ul><h2 id="发文章"><a href="#发文章" class="headerlink" title="发文章"></a>发文章</h2><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">npx hexo new <span class="hljs-string">&quot;文章标题&quot;</span><br>npx hexo server<br></code></pre></td></tr></table></figure><p>在 front-matter 里加 <code>featured: true</code>，文章会出现在首页「值得一读」。</p>]]>
+    </content>
+    <id>https://xander-yangxh.github.io/2026/08/28/hexo-ember-theme/</id>
+    <link href="https://xander-yangxh.github.io/2026/08/28/hexo-ember-theme/"/>
+    <published>2026-08-28T13:30:00.000Z</published>
+    <summary>
+      <![CDATA[<p>这个博客的主题 Ember 是自己写的，没有用现成的主题。记录一下几个设计取舍，方便以后回头改。</p>]]>
+    </summary>
+    <title>给博客写一套暖色主题：设计取舍记录</title>
+    <updated>2026-08-28T13:30:00.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>Xander Yang</name>
+    </author>
+    <category term="笔记" scheme="https://xander-yangxh.github.io/categories/%E7%AC%94%E8%AE%B0/"/>
+    <category term="Agent" scheme="https://xander-yangxh.github.io/tags/Agent/"/>
+    <category term="LLM" scheme="https://xander-yangxh.github.io/tags/LLM/"/>
+    <content>
+      <![CDATA[<p>不管框架包装得多复杂，LLM Agent 的内核都是同一个循环：<strong>模型思考 → 决定调用工具 → 拿到观察结果 → 再思考</strong>，直到它认为可以给出最终答案。</p><span id="more"></span><h2 id="最小循环"><a href="#最小循环" class="headerlink" title="最小循环"></a>最小循环</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">run_agent</span>(<span class="hljs-params">llm, tools, task, max_steps=<span class="hljs-number">8</span></span>):<br>    messages = [&#123;<span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;user&quot;</span>, <span class="hljs-string">&quot;content&quot;</span>: task&#125;]<br>    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(max_steps):<br>        reply = llm(messages, tools=tools.schema())<br>        messages.append(reply)<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> reply.tool_calls:          <span class="hljs-comment"># 没有工具调用 = 最终答案</span><br>            <span class="hljs-keyword">return</span> reply.content<br>        <span class="hljs-keyword">for</span> call <span class="hljs-keyword">in</span> reply.tool_calls:<br>            result = tools.run(call.name, **call.arguments)<br>            messages.append(&#123;<span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;tool&quot;</span>, <span class="hljs-string">&quot;id&quot;</span>: call.<span class="hljs-built_in">id</span>, <span class="hljs-string">&quot;content&quot;</span>: <span class="hljs-built_in">str</span>(result)&#125;)<br>    <span class="hljs-keyword">raise</span> RuntimeError(<span class="hljs-string">&quot;超过最大步数，任务未完成&quot;</span>)<br></code></pre></td></tr></table></figure><p>几个值得注意的点：</p><ol><li><strong>终止条件由模型给出</strong>：没有工具调用就是答案，所以必须配 <code>max_steps</code>，防止死循环。</li><li><strong>观察结果也是上下文</strong>：工具返回得越长，后续每一步越贵，也越容易把模型带偏。</li><li><strong>工具描述就是提示词</strong>：函数名、参数说明写得含糊，模型就会乱调。</li></ol><h2 id="容易踩的坑"><a href="#容易踩的坑" class="headerlink" title="容易踩的坑"></a>容易踩的坑</h2><ul><li>工具报错时，把错误信息原样返回给模型，往往比在外层 <code>try/except</code> 吞掉更有效——模型通常能自己修正参数。</li><li>对有副作用的工具（写文件、发请求）加确认或沙箱，别让一次幻觉变成真实操作。</li><li>上下文会越滚越长，需要截断、摘要或外部记忆，这也是后面想单独写一篇的主题。</li></ul><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>先把这个循环跑通、能观察每一步的输入输出，再去谈规划、反思、多智能体。很多”高级”能力，本质上都是在这个循环外面加约束或加记忆。</p>]]>
+    </content>
+    <id>https://xander-yangxh.github.io/2026/08/26/react-agent-loop/</id>
+    <link href="https://xander-yangxh.github.io/2026/08/26/react-agent-loop/"/>
+    <published>2026-08-26T12:00:00.000Z</published>
+    <summary>
+      <![CDATA[<p>不管框架包装得多复杂，LLM Agent 的内核都是同一个循环：<strong>模型思考 → 决定调用工具 → 拿到观察结果 → 再思考</strong>，直到它认为可以给出最终答案。</p>]]>
+    </summary>
+    <title>从 ReAct 到工具调用：一个 Agent 的最小循环</title>
+    <updated>2026-08-26T12:00:00.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>Xander Yang</name>
+    </author>
+    <category term="杂谈" scheme="https://xander-yangxh.github.io/categories/%E6%9D%82%E8%B0%88/"/>
+    <category term="随笔" scheme="https://xander-yangxh.github.io/tags/%E9%9A%8F%E7%AC%94/"/>
+    <content>
+      <![CDATA[<p>这是这个博客的第一篇文章。</p><p>我是杨烜赫，本科就读于同济大学软件工程专业（智能方向），目前作为南洋理工大学 CCDS 学院人工智能专业的硕士生学习。研究方向主要集中在大语言模型（LLM）与智能体（Agent）相关的方向。</p><p>开这个博客，主要是想把研究生阶段的学习、论文阅读笔记、工程实践和一些技术上的思考记录下来，也算是给自己一个持续输出的地方。</p><span id="more"></span><h2 id="接下来会写点什么"><a href="#接下来会写点什么" class="headerlink" title="接下来会写点什么"></a>接下来会写点什么</h2><ul><li>LLM &#x2F; Agent 相关论文的阅读笔记</li><li>课程学习与科研过程中的踩坑记录</li><li>工程实践相关的技术笔记（全栈开发、深度学习工具链等）</li><li>一些留学生活相关的随笔</li></ul><h2 id="关于这个博客"><a href="#关于这个博客" class="headerlink" title="关于这个博客"></a>关于这个博客</h2><p>这个博客基于 <a href="https://hexo.io/">Hexo</a> 搭建，主题 Ember 是自己写的（版式参考了 Startint.log，配色与衬线标题取了点 Claude 的味道）。以下是一些常用命令，留作备忘：</p><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 新建一篇文章</span><br>$ hexo new <span class="hljs-string">&quot;文章标题&quot;</span><br><br><span class="hljs-comment"># 本地预览（默认 http://localhost:4000）</span><br>$ hexo server<br><br><span class="hljs-comment"># 生成静态文件</span><br>$ hexo generate<br><br><span class="hljs-comment"># 部署到远程仓库（需先配置 deploy 字段）</span><br>$ hexo deploy<br></code></pre></td></tr></table></figure><p>欢迎常来看看。</p>]]>
+    </content>
+    <id>https://xander-yangxh.github.io/2026/08/24/hello-world/</id>
+    <link href="https://xander-yangxh.github.io/2026/08/24/hello-world/"/>
+    <published>2026-08-24T04:00:00.000Z</published>
+    <summary>
+      <![CDATA[<p>这是这个博客的第一篇文章。</p>
+<p>我是杨烜赫，本科就读于同济大学软件工程专业（智能方向），目前作为南洋理工大学 CCDS 学院人工智能专业的硕士生学习。研究方向主要集中在大语言模型（LLM）与智能体（Agent）相关的方向。</p>
+<p>开这个博客，主要是想把研究生阶段的学习、论文阅读笔记、工程实践和一些技术上的思考记录下来，也算是给自己一个持续输出的地方。</p>]]>
+    </summary>
+    <title>博客上线</title>
+    <updated>2026-08-24T04:00:00.000Z</updated>
+  </entry>
+</feed>
