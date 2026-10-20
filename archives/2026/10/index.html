@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Xander的博客</title>
+  <meta name="description" content="记录学习、科研与工程实践的个人博客">
+  <meta name="author" content="Xander Yang">
+  <meta name="theme-color" content="#1a1816">
+  <meta property="og:title" content="Xander的博客">
+  <meta property="og:description" content="记录学习、科研与工程实践的个人博客">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://xander-yangxh.github.io/archives/2026/10/index.html">
+  <link rel="icon" href="/images/avatar.jpeg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Noto+Serif+SC:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap">
+  <link rel="stylesheet" href="/css/main.css">
+  <script>
+    // 首屏前应用主题，避免闪烁
+    (function () {
+      try {
+        var m = localStorage.getItem('ember-theme') || 'dark';
+        var r = m === 'system' ? (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark') : m;
+        document.documentElement.setAttribute('data-theme', r);
+        document.documentElement.setAttribute('data-mode', m);
+      } catch (e) {}
+    })();
+  </script>
+<meta name="generator" content="Hexo 8.1.2"><link rel="alternate" href="/atom.xml" title="Xander的博客" type="application/atom+xml">
+</head>
+
+<body class="page-index">
+  <div class="bg-fx" aria-hidden="true"><i></i><i></i><i></i></div>
+  <a class="skip" href="#main">跳到正文</a>
+  <header class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="brand" href="/" aria-label="首页">
+      <img class="brand-logo" src="/images/avatar.jpeg" alt="" width="44" height="44">
+      <span class="brand-text">
+        <strong>Xander<i>.log</i></strong>
+        <small>LLM · Agent · 软件工程</small>
+      </span>
+    </a>
+
+    <nav class="menu" id="menu" aria-label="主导航">
+      
+        <a href="/" class="">首页</a>
+      
+        <a href="/archives/" class="is-active">文章库</a>
+      
+        <a href="/tags/" class="">标签</a>
+      
+        <a href="/about/" class="">关于</a>
+      
+        <a href="/links/" class="">友链</a>
+      
+    </nav>
+
+    <div class="nav-tools">
+      <button class="icon-btn" id="search-open" aria-label="搜索 (Ctrl/⌘ K)" title="搜索 (Ctrl/⌘ K)">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M10.5 3a7.5 7.5 0 0 1 5.9 12.1l4.3 4.3-1.4 1.4-4.3-4.3A7.5 7.5 0 1 1 10.5 3zm0 2a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11z"/></svg>
+      </button>
+      <div class="theme-switch" role="group" aria-label="主题">
+        <button data-mode="light" aria-label="浅色"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm-1-6h2v3h-2V1zm0 19h2v3h-2v-3zM1 11h3v2H1v-2zm19 0h3v2h-3v-2zM4.2 5.6l1.4-1.4 2.1 2.1-1.4 1.4-2.1-2.1zm12.1 12.1l1.4-1.4 2.1 2.1-1.4 1.4-2.1-2.1zM5.6 19.8l-1.4-1.4 2.1-2.1 1.4 1.4-2.1 2.1zM17.7 7.7l-1.4-1.4 2.1-2.1 1.4 1.4-2.1 2.1z"/></svg></button>
+        <button data-mode="dark" aria-label="深色"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M21 14.5A9 9 0 0 1 9.5 3a9 9 0 1 0 11.5 11.5z"/></svg></button>
+        <button data-mode="system" aria-label="跟随系统"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M3 4h18a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1h-7v2h3v2H7v-2h3v-2H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zm1 2v9h16V6H4z"/></svg></button>
+      </div>
+      
+      <a class="icon-btn gh" href="https://github.com/Xander-YangXH" aria-label="GitHub" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.38 7.86 10.9.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.69 1.25 3.35.96.1-.74.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.83 1.18 3.09 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+      </a>
+      
+      <button class="icon-btn burger" id="burger" aria-label="菜单" aria-expanded="false">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+  <main id="main">
+    
+<section class="wrap list-wrap">
+  <header class="post-head">
+    <p class="eyebrow">Archive</p>
+    <h1>文章库</h1>
+    <p class="post-meta">1 篇文章</p>
+  </header>
+  
+  
+  <div class="year">
+    <h2>2026</h2>
+    <ul class="timeline">
+      
+      <li>
+        <time>10-20</time>
+        <a href="/2026/10/20/leetcode-hot100/">LeetCode 热题 100 通关笔记（Python）：按解题方法归类，附模板与 ACM 输入输出</a>
+        <span class="row-tags"><span>#LeetCode</span><span>#算法</span><span>#Python</span></span>
+      </li>
+      
+    </ul>
+  </div>
+  
+</section>
+
+  </main>
+  <footer class="foot">
+  <div class="wrap foot-inner">
+    <p>© 2026 Xander Yang — 以 Hexo 构建，主题 Ember</p>
+    <p class="foot-links">
+      <a href="https://github.com/Xander-YangXH" target="_blank" rel="noopener">GitHub</a>
+      <a href="mailto:yangxuanhe04@gmail.com">Email</a>
+      <a href="/atom.xml">RSS</a>
+    </p>
+  </div>
+</footer>
+
+  <div class="search" id="search" hidden>
+  <div class="search-backdrop" data-close></div>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-label="搜索文章">
+    <input id="search-input" type="search" placeholder="搜索标题、标签或正文…" autocomplete="off" spellcheck="false">
+    <ul id="search-results"></ul>
+    <p class="search-hint"><kbd>↑</kbd><kbd>↓</kbd> 选择 · <kbd>Enter</kbd> 打开 · <kbd>Esc</kbd> 关闭</p>
+  </div>
+</div>
+<script>window.__SEARCH_URL__ = "/search.json";</script>
+
+  <script src="/js/main.js" defer></script>
+</body>
+</html>
